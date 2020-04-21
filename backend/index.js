@@ -8,6 +8,9 @@ server.use('/login', LoginRoutes);
 const UserRoutes = require('./routes/UserRoutes');
 server.use('/user', UserRoutes);
 
+const BookRoutes = require('./routes/BookRoutes');
+server.use('/book', BookRoutes);
+
 server.listen(3333, () => {
   console.log('API ONLINE');
 });
