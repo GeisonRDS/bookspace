@@ -2,6 +2,9 @@ const express = require('express');
 const server = express();
 server.use(express.json());
 
+const LoginRoutes = require('./routes/LoginRoutes');
+server.use('/login', LoginRoutes);
+
 const UserRoutes = require('./routes/UserRoutes');
 server.use('/user', UserRoutes);
 
