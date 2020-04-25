@@ -14,6 +14,9 @@ server.use('/book', BookRoutes);
 const RentalRoutes = require('./routes/RentalRoutes');
 server.use('/rental', RentalRoutes);
 
+const SuggestionsRoutes = require('./routes/SuggestionsRoutes');
+server.use('/suggestions', SuggestionsRoutes);
+
 server.listen(3333, () => {
   console.log('API ONLINE');
 });

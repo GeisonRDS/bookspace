@@ -1,5 +1,5 @@
 const RentalModel = require('../model/RentalModel');
-const UserModel = require('../model/UserModel');
+const BookModel = require('../model/BookModel');
 const current = new Date();
 
 class RentalController {
@@ -28,14 +28,11 @@ class RentalController {
   }
 
   async rentedLate(req, res){
-    //var option = req.params.option.toString();
-    //console.log(req.params.option + '   ' + option);
     if(req.params.option === "rented"){
       await RentalModel.find({$and: [{'devolution': ""},
                                 {'expected_return_date': {$gt: current}}]})
               .then(response => {
                 if(response){
-                  console.log("rented");
                   return res.status(200).json(response);
                 }else
                   return res.status(404).json(error);
@@ -48,7 +45,6 @@ class RentalController {
                                 {'expected_return_date': {$lt: current}}]})
               .then(response => {
                 if(response){
-                  console.log("late");
                   return res.status(200).json(response);
                 }else
                   return res.status(404).json(error);
@@ -63,14 +59,17 @@ class RentalController {
 
   async create(req, res) {
     const rental = new RentalModel(req.body);
+    const book = req.body.book_id;
+    var views = await BookModel.findOne({'_id': book});
     await rental
             .save()
             .then(response => {
-              return res.status(200).json(response)
+              return res.status(200).json(response);
             })
             .catch(error => {
               return res.status(500).json(error);
             });
+    await BookModel.findByIdAndUpdate({'_id': book}, {'views': views.views + 1}, { new: true });
   }
 
   async update(req, res){
@@ -79,7 +78,7 @@ class RentalController {
               return res.status(200).json(response);
             })
             .catch(error => {
-              return res.status(500).json({error: 'Aluguel do livro não encontrado'});
+              return res.status(500).json(error);
             });
   }
 
@@ -89,7 +88,7 @@ class RentalController {
               return res.status(200).json(response);
             })
             .catch(error => {
-              return res.status(500).json({error: 'Aluguel do livro não encontrado'});
+              return res.status(500).json(error);
             });
   }
 
@@ -106,7 +105,7 @@ class RentalController {
               return res.status(200).json(response);
             })
             .catch(error => {
-              return res.status(500).json({error: 'Nenhum registro encontrado'});
+              return res.status(500).json(error);
             });
   }
 
