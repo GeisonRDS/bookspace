@@ -5,7 +5,7 @@ const BookSchema = new Schema({
   title: {type: String, required: true},
   genre: {type: String, required: true},
   synopse: {type: String, required: true},
-  author: {type: String, required: false},
+  author: {type: String, required: true},
   stars: {type: Number, default: 0},
   views: {type: Number, default: 0},
   release_date_of: {type: Date, required: false},

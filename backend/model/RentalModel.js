@@ -11,7 +11,7 @@ const RentalSchema = new Schema({
   book_id: {type: ObjectBookId, required: true},
   book_title: {type: String, required: true},
   expected_return_date: {type: Date, required: true},
-  devolution: {type: Date, required: false},
+  devolution: {type: Date, default: ''},
   created: {type: Date, default: Date.now()}
 });
 

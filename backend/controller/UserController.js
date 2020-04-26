@@ -26,9 +26,7 @@ class UserController {
   }
 
   async create(req, res) {
-    console.log(req.body);
     const user = new UserModel(req.body);
-    console.log(req.body);
     await user
             .save()
             .then(response => {
